@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option go_package = "github.com/Megabd/Distributed-Auction-System/proto";
+
+package proto;
+
+// compile command:
+// protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative [path to file, ex. proto/interface.proto]
+
+
+service Auction
+{
+    rpc bid (Amount) returns (Ack);
+
+    rpc result (void) returns (Outcome);
+
+}
+
+message Amount{
+    int64 id = 1;
+    int64 value = 2;
+}
+
+message Ack {
+    bool success = 1;
+}
+
+message Outcome {
+    int64 id = 1;
+    int64 value = 2;
+    bool over = 3;
+}
+
+message void {
+    
+}
