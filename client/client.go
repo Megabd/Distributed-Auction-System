@@ -32,6 +32,8 @@ func main() {
 		ctx: ctx,
 	}
 
+	fmt.Println("Started succesfully")
+
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() {
@@ -73,7 +75,7 @@ func (c *clientStruct) bid(client proto.AuctionClient, amount int64) {
 	if response.Success {
 		fmt.Println("Successful bid, you are now highest bidder")
 	} else if !response.Success {
-		fmt.Println("Your bid did not exceed the current highest bid")
+		fmt.Println("Your bid did not exceed the current highest bid/there is no active Auction")
 	}
 }
 

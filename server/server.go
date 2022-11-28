@@ -30,25 +30,30 @@ func main() {
 	}
 
 	server := &Server{
-		auctionEnded: false,
+		auctionEnded: true,
 		maxBid:       0,
 		maxBidderId:  0,
 	}
 
 	grpcServer := grpc.NewServer()
-
 	auction.RegisterAuctionServer(grpcServer, server) //Registers the server to the gRPC server.
 
-	if err := grpcServer.Serve(list); err != nil {
-		log.Fatalf("failed to server %v", err)
-	}
-	fmt.Printf("Server started successfully")
+	go func() {
+		if err := grpcServer.Serve(list); err != nil {
+			log.Fatalf("failed to server %v", err)
+		}
+	}()
+
+	fmt.Println("Server started successfully")
 
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() {
-
-		server.startAuction(scanner.Text())
+		if server.auctionEnded {
+			server.startAuction(scanner.Text())
+		} else {
+			fmt.Println("Auction already in progress")
+		}
 
 	}
 
@@ -60,6 +65,7 @@ func (s *Server) startAuction(text string) {
 		s.auctionEnded = false
 		s.maxBid = 0
 		s.maxBidderId = 0
+		fmt.Println("Auction Started")
 
 		go func() {
 			for i := 1; i < 240; i++ {
@@ -70,21 +76,25 @@ func (s *Server) startAuction(text string) {
 			}
 		}()
 
+	} else {
+		fmt.Println("Unknown Command, try: Start Auction")
 	}
 
 }
 
 // given a bid, returns an outcome among {fail, success or exception}
 func (s *Server) Bid(ctx context.Context, amount *proto.Amount) (*proto.Ack, error) {
-	//register bidder if new
 	ack := &proto.Ack{}
-
-	if amount.Value <= 0 { //or amount lower than previous bid from bidder
-		ack.Success = false
-	} else if s.maxBid < amount.Value {
-		s.maxBid = amount.Value
-		s.maxBidderId = amount.Id
-		ack.Success = true
+	if !s.auctionEnded {
+		if amount.Value <= 0 {
+			ack.Success = false
+		} else if s.maxBid < amount.Value {
+			s.maxBid = amount.Value
+			s.maxBidderId = amount.Id
+			ack.Success = true
+		} else {
+			ack.Success = false
+		}
 	} else {
 		ack.Success = false
 	}
