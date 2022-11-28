@@ -1,13 +1,11 @@
 package main
 
 import (
-	"bufio"
 	"context"
 	"fmt"
 	"log"
 	"net"
 	"os"
-	"strings"
 	"time"
 
 	"Distributed-Auction-System/proto"
@@ -24,9 +22,52 @@ type Server struct {
 }
 
 func main() {
-	list, err := net.Listen("tcp", ":9080")
+
+	// If the file doesn't exist, create it or append to the file
+	file, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+
 	if err != nil {
-		log.Fatalf("Failed to listen on port 9080: %v", err)
+		log.Fatal(err)
+	}
+
+	log.SetOutput(file)
+
+	ownPort := 5000
+
+	list, err := net.Listen("tcp", fmt.Sprintf(":%v", ownPort))
+
+	if err != nil {
+		log.Fatalf("Failed to listen on port: %v", err)
+	}
+
+	server := &Server{
+		auctionEnded: true,
+		maxBid:       0,
+		maxBidderId:  0,
+	}
+
+	grpcServer := grpc.NewServer()
+	auction.RegisterAuctionServer(grpcServer, server) //Registers the server to the gRPC server.
+
+	fmt.Println("Server started successfully")
+	log.Printf("Server with port: %v started succesfully", ownPort)
+	main2(ownPort + 1)
+	main2(ownPort + 2)
+
+	if err := grpcServer.Serve(list); err != nil {
+		log.Fatalf("failed to server %v", err)
+	}
+
+}
+
+func main2(portId int) {
+
+	ownPort := portId
+
+	list, err := net.Listen("tcp", fmt.Sprintf(":%v", ownPort))
+
+	if err != nil {
+		log.Fatalf("Failed to listen on port: %v", err)
 	}
 
 	server := &Server{
@@ -45,45 +86,33 @@ func main() {
 	}()
 
 	fmt.Println("Server started successfully")
-
-	scanner := bufio.NewScanner(os.Stdin)
-
-	for scanner.Scan() {
-		if server.auctionEnded {
-			server.startAuction(scanner.Text())
-		} else {
-			fmt.Println("Auction already in progress")
-		}
-
-	}
-
+	log.Printf("Server with port: %v started succesfully", ownPort)
 }
 
-func (s *Server) startAuction(text string) {
+func (s *Server) startAuction() {
 
-	if strings.Contains(text, "Start Auction") {
-		s.auctionEnded = false
-		s.maxBid = 0
-		s.maxBidderId = 0
-		fmt.Println("Auction Started")
+	s.auctionEnded = false
+	s.maxBid = 0
+	s.maxBidderId = 0
 
-		go func() {
-			for i := 1; i < 240; i++ {
-				if i == 239 {
-					s.auctionEnded = true
-				}
-				time.Sleep(1 * time.Second)
+	go func() {
+		for i := 1; i < 60; i++ {
+			if i == 59 {
+				s.auctionEnded = true
+				log.Printf("The winner is: %v with a max bid of: %v\n", s.maxBidderId, s.maxBid)
 			}
-		}()
-
-	} else {
-		fmt.Println("Unknown Command, try: Start Auction")
-	}
+			time.Sleep(1 * time.Second)
+		}
+	}()
 
 }
 
 // given a bid, returns an outcome among {fail, success or exception}
 func (s *Server) Bid(ctx context.Context, amount *proto.Amount) (*proto.Ack, error) {
+	if s.auctionEnded {
+		s.startAuction()
+	}
+
 	ack := &proto.Ack{}
 	if !s.auctionEnded {
 		if amount.Value <= 0 {
