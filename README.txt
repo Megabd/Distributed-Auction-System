@@ -17,4 +17,4 @@ Nice to know:
 There are two commands, "info" and "bid (amount)" where amount is the amount you wish to bid.
 Auctions last 1 minute and start over when someone bids while there is no Auction active.
 Winners can be seen in log file.
-
+To crash a server use specifically CTRL + C to crash. If you press the cross to close the terminal down it wont log the crash.
