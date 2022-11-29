@@ -1,0 +1,48 @@
+2022/11/29 15:40:11 Client with ID: 1 started succesfully
+2022/11/29 15:40:20 Client with ID: 2 started succesfully
+2022/11/29 15:40:27 Client with ID: 3 started succesfully
+2022/11/29 15:40:29 1 is now the highest bidder with bid: 100
+2022/11/29 15:40:29 1 is now the highest bidder with bid: 100
+2022/11/29 15:40:29 1 is now the highest bidder with bid: 100
+2022/11/29 15:40:36 2's bid did not exceed the current highest bid/there is no active Auction 
+2022/11/29 15:40:36 2's bid did not exceed the current highest bid/there is no active Auction 
+2022/11/29 15:40:36 2's bid did not exceed the current highest bid/there is no active Auction 
+2022/11/29 15:40:40 2 is now the highest bidder with bid: 110
+2022/11/29 15:40:40 2 is now the highest bidder with bid: 110
+2022/11/29 15:40:40 2 is now the highest bidder with bid: 110
+2022/11/29 15:40:50 3 is now the highest bidder with bid: 210
+2022/11/29 15:40:50 3 is now the highest bidder with bid: 210
+2022/11/29 15:40:50 3 is now the highest bidder with bid: 210
+2022/11/29 15:41:02 1 is now the highest bidder with bid: 211
+2022/11/29 15:41:02 1 is now the highest bidder with bid: 211
+2022/11/29 15:41:02 1 is now the highest bidder with bid: 211
+2022/11/29 15:41:10 invalid bid, try again.
+2022/11/29 15:41:10 invalid bid, try again.
+2022/11/29 15:41:10 invalid bid, try again.
+2022/11/29 15:41:14 2 is now the highest bidder with bid: 250
+2022/11/29 15:41:14 2 is now the highest bidder with bid: 250
+2022/11/29 15:41:14 2 is now the highest bidder with bid: 250
+2022/11/29 15:41:23 3 is now the highest bidder with bid: 420
+2022/11/29 15:41:23 3 is now the highest bidder with bid: 420
+2022/11/29 15:41:23 3 is now the highest bidder with bid: 420
+2022/11/29 15:41:37 1 is now the highest bidder with bid: 100
+2022/11/29 15:41:37 1 is now the highest bidder with bid: 100
+2022/11/29 15:41:37 1 is now the highest bidder with bid: 100
+2022/11/29 15:41:43 2 is now the highest bidder with bid: 150
+2022/11/29 15:41:43 2 is now the highest bidder with bid: 150
+2022/11/29 15:41:43 2 is now the highest bidder with bid: 150
+2022/11/29 15:41:50 Something went wrong with auction info from/to ID: 3
+2022/11/29 15:41:56 3 is now the highest bidder with bid: 169
+2022/11/29 15:41:56 3 is now the highest bidder with bid: 169
+2022/11/29 15:41:58 Something went wrong with bid from ID: 3 
+2022/11/29 15:42:01 Something went wrong with auction info from/to ID: 2
+2022/11/29 15:42:06 2's bid did not exceed the current highest bid/there is no active Auction 
+2022/11/29 15:42:06 2's bid did not exceed the current highest bid/there is no active Auction 
+2022/11/29 15:42:08 Something went wrong with bid from ID: 2 
+2022/11/29 15:42:13 1 is now the highest bidder with bid: 190
+2022/11/29 15:42:13 1 is now the highest bidder with bid: 190
+2022/11/29 15:42:15 Something went wrong with bid from ID: 1 
+2022/11/29 15:42:19 Something went wrong with auction info from/to ID: 1
+2022/11/29 15:42:27 Something went wrong with auction info from/to ID: 3
+2022/11/29 15:42:34 Something went wrong with auction info from/to ID: 3
+2022/11/29 15:42:49 Something went wrong with auction info from/to ID: 3

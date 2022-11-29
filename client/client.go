@@ -16,7 +16,7 @@ import (
 func main() {
 
 	// If the file doesn't exist, create it or append to the file
-	file, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	file, err := os.OpenFile("ClientLogs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 
 	if err != nil {
 		log.Fatal(err)
@@ -100,7 +100,7 @@ func (c *clientStruct) bid(server proto.AuctionClient, amount int64) string {
 		return "Something went wrong"
 	}
 	if response.Success {
-		log.Printf("%v is now the highest bidder \n", c.id)
+		log.Printf("%v is now the highest bidder with bid: %v\n", c.id, amount)
 		return "Successful bid, you are now highest bidder"
 	} else {
 		log.Printf("%v's bid did not exceed the current highest bid/there is no active Auction \n", c.id)

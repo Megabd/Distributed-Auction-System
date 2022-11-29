@@ -1,0 +1,9 @@
+2022/11/29 15:39:19 Server with port: 5000 started succesfully
+2022/11/29 15:39:35 Server with port: 5001 started succesfully
+2022/11/29 15:39:47 Server with port: 5002 started succesfully
+2022/11/29 15:41:28 The winner is: 3 with a max bid of: 420
+2022/11/29 15:41:28 The winner is: 3 with a max bid of: 420
+2022/11/29 15:41:28 The winner is: 3 with a max bid of: 420
+2022/11/29 15:41:45 Server with port 5002 closing, got signal interrupt
+2022/11/29 15:42:35 The winner is: 1 with a max bid of: 190
+2022/11/29 15:42:35 The winner is: 1 with a max bid of: 190

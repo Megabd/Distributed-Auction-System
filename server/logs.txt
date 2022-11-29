@@ -1,9 +1,0 @@
-2022/11/28 20:04:40 Server with port: 5000 started succesfully
-2022/11/28 20:04:40 Server with port: 5001 started succesfully
-2022/11/28 20:04:40 Server with port: 5002 started succesfully
-2022/11/28 20:08:19 The winner is: 1 with a max bid of: 100
-2022/11/28 20:08:19 The winner is: 1 with a max bid of: 100
-2022/11/28 20:08:19 The winner is: 1 with a max bid of: 100
-2022/11/28 20:09:25 The winner is: 2 with a max bid of: 150
-2022/11/28 20:09:25 The winner is: 2 with a max bid of: 150
-2022/11/28 20:09:25 The winner is: 2 with a max bid of: 150

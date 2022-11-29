@@ -6,6 +6,8 @@ import (
 	"log"
 	"net"
 	"os"
+	"os/signal"
+	"strconv"
 	"time"
 
 	"Distributed-Auction-System/proto"
@@ -24,7 +26,7 @@ type Server struct {
 func main() {
 
 	// If the file doesn't exist, create it or append to the file
-	file, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	file, err := os.OpenFile("ServerLogs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 
 	if err != nil {
 		log.Fatal(err)
@@ -32,7 +34,8 @@ func main() {
 
 	log.SetOutput(file)
 
-	ownPort := 5000
+	arg1, _ := strconv.ParseInt(os.Args[1], 10, 32)
+	ownPort := 5000 + arg1
 
 	list, err := net.Listen("tcp", fmt.Sprintf(":%v", ownPort))
 
@@ -51,42 +54,19 @@ func main() {
 
 	fmt.Println("Server started successfully")
 	log.Printf("Server with port: %v started succesfully", ownPort)
-	main2(ownPort + 1)
-	main2(ownPort + 2)
+
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	go func() {
+		for sig := range c {
+			log.Fatalf("Server with port %v closing, got signal %v", ownPort, sig.String())
+		}
+	}()
 
 	if err := grpcServer.Serve(list); err != nil {
 		log.Fatalf("failed to server %v", err)
 	}
 
-}
-
-func main2(portId int) {
-
-	ownPort := portId
-
-	list, err := net.Listen("tcp", fmt.Sprintf(":%v", ownPort))
-
-	if err != nil {
-		log.Fatalf("Failed to listen on port: %v", err)
-	}
-
-	server := &Server{
-		auctionEnded: true,
-		maxBid:       0,
-		maxBidderId:  0,
-	}
-
-	grpcServer := grpc.NewServer()
-	auction.RegisterAuctionServer(grpcServer, server) //Registers the server to the gRPC server.
-
-	go func() {
-		if err := grpcServer.Serve(list); err != nil {
-			log.Fatalf("failed to server %v", err)
-		}
-	}()
-
-	fmt.Println("Server started successfully")
-	log.Printf("Server with port: %v started succesfully", ownPort)
 }
 
 func (s *Server) startAuction() {
